@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ไวยากรณ์และตัวแปร</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>ไวยากรณ์และตัวแปรในภาษา C</h1>
+    </header>
+    <nav>
+        <a href="index.html">กลับไปหน้าหลัก</a>
+    </nav>
+    <section id="syntax" class="section">
+        <p>ภาษา C มีไวยากรณ์ที่ค่อนข้างเข้มงวด ซึ่งรวมถึงการใช้เครื่องหมายจุดทศนิยม (;) เพื่อสิ้นสุดคำสั่ง และการใช้วงเล็บปีกกา ({}) เพื่อกำหนดบล็อกของโค้ด...</p>
+        <h3>ตัวแปรในภาษา C</h3>
+        <p>ตัวแปรในภาษา C ต้องถูกประกาศก่อนใช้งาน โดยระบุชนิดข้อมูล เช่น int, float, char เป็นต้น...</p>
+        <pre><code> 
+#include &lt;stdio.h&gt;
+int main() {
+    int age = 25; // ประกาศตัวแปรชนิด int
+    float height = 175.5; // ประกาศตัวแปรชนิด float
+    char grade = 'A'; // ประกาศตัวแปรชนิด char
+
+    printf("Age: %d\n", age);
+    printf("Height: %.2f\n", height);
+    printf("Grade: %c\n", grade);
+
+    return 0;
+}
+        </code></pre>
+    </section>
+</body>
+</html>

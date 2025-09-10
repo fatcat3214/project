@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewpost" content="width=device-width, initial-scale=1.0">
+    <title>สอนเขียนภาษาC</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+     <header>
+        <img src="images/Fatcat.png" alt="Fat Cat Logo">
+        <h1>เว็บไซต์สอนเขียนโปรแกรมภาษา C</h1>
+        <p>เริ่มต้นเส้นทางการเป็นนักพัฒนาไปกับเรา</p>
+    </header>
+
+    <nav>
+        <a href="#introduction">บทนำ</a>
+        <a href="#history">ประวัติ</a>
+        <a href="#setup">การติดตั้ง</a>
+        <a href="#basic">พื้นฐาน</a>
+        <a href="#syntax">ไวยากรณ์</a>
+        <a href="game.html">เกม</a>
+        <a href="Project.html">เข้าสู่ระบบ</a>
+    </nav>
+    <div class="container">
+        <section id="introduction" class="section">
+            <h2>บทนำสู่ภาษา C</h2>
+            <p>ภาษา C เป็นภาษาโปรแกรมที่มีประสิทธิภาพสูงและเป็นรากฐานของภาษาโปรแกรมอื่นๆ อีกมากมาย...</p>
+        </section>
+        <section id="history" class="section">
+            <h2>ประวัติของภาษา C</h2>
+            <p>ภาษา C ถูกพัฒนาโดย Dennis Ritchie ที่ Bell Labs ในช่วงต้นทศวรรษ 1970...</p>
+            <a href="history.html">อยากอ่านกดตรงนี้</a>
+
+        </section>
+
+        <section id="setup" class="section">
+            <h2>การติดตั้งโปรแกรมที่จำเป็น</h2>
+            <p>ก่อนเริ่มต้นเขียนโปรแกรม เราต้องติดตั้งคอมไพเลอร์ (Compiler) เช่น GCC หรือ MinGW...</p>
+            <h3>ขั้นตอนการติดตั้ง GCC บน Windows</h3>
+            <ol>
+                <li>ดาวน์โหลด MinGW-W64 จากเว็บไซต์ทางการ</li>
+                <li>ติดตั้งตามคำแนะนำ</li>
+                <li>ตั้งค่า Environment Variables</li>
+            </ol>
+            <a href="setup.html">อยากอ่านกดตรงนี้</a>
+        </section>
+
+        <section id="basic" class="section">
+            <h2>โครงสร้างพื้นฐานของโปรแกรมภาษา C</h2>
+            <p>โปรแกรมภาษา C ทุกโปรแกรมจะเริ่มต้นด้วยฟังก์ชัน <code>main()</code>...</p>
+            <pre><code>
+#include &lt;stdio.h&gt;
+
+int main() {
+    // นี่คือส่วนของโค้ดโปรแกรม
+    printf("Hello, World!");
+    return 0;
+}
+            </code></pre>
+            <a href="basic.html">อยากอ่านกดตรงนี้</a>
+        </section>
+        
+        <section id="syntax" class="section">
+            <h2>ไวยากรณ์และตัวแปร</h2>
+            <p>เรียนรู้เกี่ยวกับตัวแปร, ชนิดข้อมูล (Data Types) และการใช้งานพื้นฐาน...</p>
+            <p>ตัวอย่างการประกาศตัวแปร:</p>
+            <pre><code>
+int age = 30;
+float price = 19.99;
+char initial = 'A';
+            </code></pre>
+            <a href="syntax.html">อยากอ่านกดตรงนี้</a>
+        </section>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 เว็บไซต์สอนเขียนโปรแกรมภาษา C</p>
+    </footer>
+</body>
+</html>

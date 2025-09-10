@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>เกมวิ่งหลบต้นไม้</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+   
+ body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background:radial-gradient(circle, #ff0008, #000000);
+            color: #000000;
+        }
+ header {
+            background: radial-gradient(circle, #ff0008, #000000);
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+header img {
+        height: 150px;
+        background-size: cover;
+        background: radial-gradient(circle, #ff0008, #000000);
+        }
+ header h1 {
+            margin: 0;
+        }
+ nav {
+            background: radial-gradient(circle, #ff0008, #000000);
+            color: #fff;
+            padding: 0.5rem 0;
+            text-align: center;
+        }
+ nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0 15px;
+            transition: background-color 0.3s ease, transform 0.3s;
+        }
+nav a:hover {
+            background-color: #6b0101;
+            transform: scale(0.95);
+            }   
+.container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+.section {
+            background: #ffffff;
+            background-size: cover;
+            
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+.section a{
+            color: #000000;
+            text-decoration: none;
+            padding: 0 15px
+}
+pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+footer {
+            text-align: center;
+            padding: 1rem 0;
+            background: radial-gradient(circle, #ff0008, #000000);
+            color: #fff;
+            margin-top: 20px;
+        }
+a:hover{
+            background-color: #c9bdbd;
+            transform: scale(0.95);
+}
+    #game {
+      position: relative;
+      width: 800px;
+      height: 300px;
+      background: #87CEEB;
+      border: 3px solid #fff;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      cursor: pointer;
+    }
+
+    /* พื้นดิน */
+    #ground {
+      position: absolute;
+      bottom: 0;
+      width: 1600px;
+      height: 50px;
+      background: #3E2C1C;
+      background-image: repeating-linear-gradient(
+        45deg,
+        #5a3d27,
+        #5a3d27 20px,
+        #3E2C1C 20px,
+        #3E2C1C 40px
+      );
+      animation: groundMove 3s linear infinite;
+    }
+
+    @keyframes groundMove {
+      from { transform: translateX(0); }
+      to { transform: translateX(-800px); }
+    }
+
+    /* ตัวละคร (คนวิ่ง) */
+    #player {
+      position: absolute;
+      bottom: 50px;
+      left: 50px;
+      width: 100px;
+      height: 100px;
+      background-image: url('images/download.jpg'); /* ใส่ลิงก์รูปคนวิ่ง */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .obstacle {
+      position: absolute;
+      bottom: 50px;
+      width: 70px;
+      height: 60px;
+      background-image: url('images/tree.jpg'); /* ใส่ลิงก์รูปต้นไม้ */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: bottom center;
+    }
+
+    #score {
+      margin-top: 20px;
+      font-size: 22px;
+      color: #ffffff;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    #gameOver {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 42px;
+      font-weight: bold;
+      color: red;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in;
+    }
+    
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <h1>game</h1>
+    </header>
+    <nav>
+        <a href="index.html">กลับไปหน้าหลัก</a>
+    </nav>
+  <div>
+    <div id="game">
+      <div id="player"></div>
+      <div id="ground"></div>
+      <div id="gameOver">GAME OVER<br><small>คลิกเพื่อเริ่มใหม่</small></div>
+    </div>
+    <div id="score">คะแนน: 0</div>
+  </div>
+
+  <script>
+    const game = document.getElementById("game");
+    const player = document.getElementById("player");
+    const scoreText = document.getElementById("score");
+    const gameOverText = document.getElementById("gameOver");
+
+    let isJumping = false;
+    let gravity = 0.35;
+    let jumpPower = 15;
+    let velocity = 0;
+    let score = 0;
+    let gameLoopId;
+    let isGameOver = false;
+    let obstacleCooldown = 0;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space" && !isJumping && !isGameOver) {
+        isJumping = true;
+        velocity = jumpPower;
+      }
+    });
+
+    function gameLoop() {
+      if (isGameOver) return;
+
+      let playerBottom = parseInt(window.getComputedStyle(player).getPropertyValue("bottom"));
+      playerBottom += velocity;
+      velocity -= gravity;
+
+      if (playerBottom <= 50) {
+        playerBottom = 50;
+        isJumping = false;
+      }
+
+      player.style.bottom = playerBottom + "px";
+
+      if (obstacleCooldown > 0) obstacleCooldown--;
+
+      if (obstacleCooldown === 0 && Math.random() < 0.01) {
+        const obstacle = document.createElement("div");
+        obstacle.classList.add("obstacle");
+        obstacle.style.left = "800px";
+        game.appendChild(obstacle);
+        obstacleCooldown = 80; // เว้นระยะ
+      }
+
+      const obstacles = document.querySelectorAll(".obstacle");
+      obstacles.forEach((obstacle) => {
+        let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"));
+        obstacleLeft -= 3; 
+        obstacle.style.left = obstacleLeft + "px";
+
+        let playerRect = player.getBoundingClientRect();
+        let obstacleRect = obstacle.getBoundingClientRect();
+
+        if (
+          playerRect.left < obstacleRect.left + obstacleRect.width &&
+          playerRect.left + playerRect.width > obstacleRect.left &&
+          playerRect.top < obstacleRect.top + obstacleRect.height &&
+          playerRect.height + playerRect.top > obstacleRect.top
+        ) {
+          cancelAnimationFrame(gameLoopId);
+          isGameOver = true;
+          gameOverText.style.display = "block";
+          return;
+        }
+
+        if (obstacleLeft + obstacle.clientWidth < 0) {
+          obstacle.remove();
+          score++;
+          scoreText.textContent = "คะแนน: " + score;
+        }
+      });
+
+      gameLoopId = requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+
+    game.addEventListener("click", () => {
+      if (isGameOver) {
+        window.location.reload();
+      }
+    });
+  </script>
+</body>
+</html>
